@@ -65,3 +65,7 @@ bootcamp2-pokedex/
 ## Créditos
 
 Os dados são fornecidos gratuitamente pela [PokéAPI](https://pokeapi.co/). Este projeto não possui vínculo oficial com a The Pokémon Company ou a Nintendo.
+
+## Observação para a entrega
+
+Antes de enviar, substitua os campos de autor e links pelos seus dados reais.
