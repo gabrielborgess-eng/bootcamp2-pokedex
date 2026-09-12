@@ -2,7 +2,7 @@ Pokedex
 
 Autor
 
-Nome completo: Gabrel Borges de Souza Santiago
+Nome completo: Gabriel Borges de Souza Santiago
 Matrícula: 22607168
 
 Descrição
