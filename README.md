@@ -1,4 +1,4 @@
-PokeBusca 
+Pokedex
 
 Autor
 
