@@ -2,7 +2,7 @@ PokeBusca
 
 Autor
 
-Nome completo: Gabriel Borges de Souza Santiago
+Nome completo: Gabrel Borges de Souza Santiago
 Matrícula: 22607168
 
 Descrição
@@ -115,7 +115,7 @@ Faça o download ou clone este repositório:
 Bash
 
 
-git clone URL_DO_SEU_REPOSITORIO
+git clone https://github.com/gabrielborgess-eng/bootcamp2-pokedex.git
 
 
 
@@ -171,10 +171,10 @@ Completar as orientações de entrega e identificação do projeto.
 Links
 
 •
-Aplicação publicada no GitHub Pages: COLE_AQUI_O_LINK_DO_GITHUB_PAGES
+Aplicação publicada no GitHub Pages: https://gabrielborgess-eng.github.io/bootcamp2-pokedex/
 
 •
-Repositório público no GitHub: COLE_AQUI_O_LINK_DO_REPOSITORIO
+Repositório público no GitHub: https://github.com/gabrielborgess-eng/Pokedex
 
 Créditos
 
