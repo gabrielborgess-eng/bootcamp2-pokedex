@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore informações sobre Pokémon usando a PokéAPI.">
+  <title>PokeBusca | Sua Pokédex online</title>
+  <!-- Projeto Bootcamp: frontend consumindo uma API pública -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topo">
+    <div class="container topo-conteudo">
+      <a class="marca" href="index.html" aria-label="PokeBusca - início">
+        <span class="marca-icone">◉</span>
+        <span>Poke<span>Busca</span></span>
+      </a>
+      <span class="status-api"><span class="status-bolinha"></span> PokéAPI online</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-conteudo">
+        <div class="hero-texto">
+          <p class="etiqueta">EXPLORE O MUNDO POKÉMON</p>
+          <h1>Qual Pokémon você quer conhecer?</h1>
+          <p class="subtitulo">Digite um nome ou número e descubra informações, tipos e características.</p>
+          <form id="form-busca" class="busca" role="search">
+            <label class="sr-only" for="campo-busca">Nome ou número do Pokémon</label>
+            <input id="campo-busca" type="search" placeholder="Ex.: pikachu ou 25" autocomplete="off" required>
+            <button id="botao-buscar" type="submit">Buscar <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="dica">Dica: experimente <button class="link-exemplo" type="button" data-pokemon="pikachu">pikachu</button>, <button class="link-exemplo" type="button" data-pokemon="charizard">charizard</button> ou <button class="link-exemplo" type="button" data-pokemon="25">25</button>.</p>
+        </div>
+        <div class="pokebola-decorativa" aria-hidden="true"><div class="pokebola-centro"></div></div>
+      </div>
+    </section>
+
+    <section class="resultado-secao container" aria-live="polite">
+      <div id="estado-inicial" class="estado estado-inicial">
+        <div class="estado-icone">?</div>
+        <h2>Comece sua busca</h2>
+        <p>Seu Pokémon aparecerá aqui com todas as informações principais.</p>
+      </div>
+
+      <div id="carregando" class="estado escondido">
+        <div class="spinner" aria-hidden="true"></div>
+        <h2>Consultando a PokéAPI...</h2>
+        <p>Um instante, estamos buscando os dados.</p>
+      </div>
+
+      <div id="mensagem-erro" class="estado erro escondido">
+        <div class="estado-icone">!</div>
+        <h2>Ops! Pokémon não encontrado</h2>
+        <p id="texto-erro">Confira a escrita e tente novamente.</p>
+      </div>
+
+      <article id="cartao-pokemon" class="cartao-pokemon escondido">
+        <div class="cartao-imagem">
+          <span id="numero-pokemon" class="numero-pokemon">#000</span>
+          <img id="imagem-pokemon" src="" alt="">
+        </div>
+        <div class="cartao-dados">
+          <p class="rotulo">POKÉMON ENCONTRADO</p>
+          <h2 id="nome-pokemon">Nome</h2>
+          <div id="tipos-pokemon" class="tipos"></div>
+          <div class="informacoes">
+            <div class="informacao"><span class="informacao-icone">↕</span><div><span class="informacao-label">Altura</span><strong id="altura-pokemon">—</strong></div></div>
+            <div class="informacao"><span class="informacao-icone">◆</span><div><span class="informacao-label">Peso</span><strong id="peso-pokemon">—</strong></div></div>
+            <div class="informacao"><span class="informacao-icone">★</span><div><span class="informacao-label">Habilidade</span><strong id="habilidade-pokemon">—</strong></div></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape-conteudo">
+      <p>Projeto desenvolvido para o Bootcamp de Frontend</p>
+      <p>Dados fornecidos por <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">PokéAPI</a></p>
+    </div>
+  </footer>
+</body>
+</html>
