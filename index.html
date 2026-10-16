@@ -74,14 +74,25 @@
             <div class="informacao"><span class="informacao-icone">◆</span><div><span class="informacao-label">Peso</span><strong id="peso-pokemon">—</strong></div></div>
             <div class="informacao"><span class="informacao-icone">★</span><div><span class="informacao-label">Habilidade</span><strong id="habilidade-pokemon">—</strong></div></div>
           </div>
+          <button id="botao-favoritar" class="botao-favoritar" type="button">☆ Favoritar</button>
+          <p id="msg-favorito" class="msg-favorito" aria-live="polite"></p>
         </div>
       </article>
+    </section>
+
+    <section class="favoritos-secao container" aria-labelledby="titulo-favoritos">
+      <div class="favoritos-topo">
+        <h2 id="titulo-favoritos">Meus favoritos</h2>
+        <span id="contador-favoritos" class="contador-favoritos">0</span>
+      </div>
+      <p id="estado-favoritos" class="estado-favoritos">Carregando favoritos...</p>
+      <ul id="lista-favoritos" class="lista-favoritos"></ul>
     </section>
   </main>
 
   <footer class="rodape">
     <div class="container rodape-conteudo">
-      <p>Projeto desenvolvido para o Bootcamp de Frontend</p>
+      <p>Projeto desenvolvido para o Bootcamp de Frontend · Etapa 02: favoritos com Supabase e Docker</p>
       <p>Dados fornecidos por <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">PokéAPI</a></p>
     </div>
   </footer>
