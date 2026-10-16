@@ -118,6 +118,8 @@ bootcamp2-pokedex/
 └── README.md       # documentação do projeto
 ```
 
+NÃO ESQUECER DE OLHAR supabase-favoritos.png PARA VER A OUTRA PRINT
+
 ## Créditos
 
 Os dados dos Pokémon são fornecidos gratuitamente pela [PokéAPI](https://pokeapi.co/). Este projeto não possui vínculo oficial com a The Pokémon Company ou a Nintendo.
