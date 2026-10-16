@@ -66,7 +66,9 @@ O arquivo `.dockerignore` exclui `.git`, `.gitignore`, `.vscode`, `README.md`, `
 Isso deixa a imagem menor e o build mais rápido porque o Docker envia ao motor, antes de construir, todo o **contexto de build** (a pasta do projeto). Sem o `.dockerignore`, itens como a pasta `.git` (com todo o histórico), prints e rascunhos seriam enviados e poderiam acabar dentro da imagem. Com ele, só o necessário entra: o contexto é menor, a transferência é mais rápida, o cache de camadas é invalidado com menos frequência e a imagem final não carrega arquivos inúteis ou sensíveis.
 
 - Contexto de build **antes** do `.dockerignore`: 21.62 kB
-- Contexto de build **depois** do `.dockerignore`: **PREENCHER** kB
+- Contexto de build **depois** do `.dockerignore`: **5.08** kB
+
+Redução de cerca de 76% no contexto enviado ao Docker (21.62 kB → 5.08 kB). O log do build também mostra o próprio `.dockerignore` sendo lido: `load .dockerignore → transferring context: 112B`.
 
 ### SQ2 · Versionamento de imagem
 
