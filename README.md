@@ -120,6 +120,6 @@ bootcamp2-pokedex/
 
 NÃO ESQUECER DE OLHAR supabase-favoritos.png PARA VER A OUTRA PRINT
 
-## Créditos
+Se o botão de favoritar não funcionar é porque, tem que subir o supabse regularmente, posso acabar não lembrando de subir
 
 Os dados dos Pokémon são fornecidos gratuitamente pela [PokéAPI](https://pokeapi.co/). Este projeto não possui vínculo oficial com a The Pokémon Company ou a Nintendo.
