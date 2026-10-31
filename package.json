@@ -1,0 +1,12 @@
+{
+  "name": "bootcamp2-pokedex",
+  "version": "1.0.0",
+  "description": "PokeBusca: Pokédex com favoritos no Supabase",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

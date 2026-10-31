@@ -27,10 +27,6 @@ function esconderEstados() {
   cartaoPokemon.classList.add('escondido');
 }
 
-function formatarNome(nome) {
-  return nome.replace(/-/g, ' ');
-}
-
 function mostrarErro(texto = 'Confira a escrita e tente novamente.') {
   esconderEstados();
   document.getElementById('texto-erro').textContent = texto;
@@ -38,13 +34,13 @@ function mostrarErro(texto = 'Confira a escrita e tente novamente.') {
 }
 
 function exibirPokemon(pokemon) {
-  document.getElementById('numero-pokemon').textContent = `#${String(pokemon.id).padStart(3, '0')}`;
+  document.getElementById('numero-pokemon').textContent = formatarNumero(pokemon.id);
   const imagem = document.getElementById('imagem-pokemon');
   imagem.src = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
   imagem.alt = `Imagem do Pokémon ${formatarNome(pokemon.name)}`;
   document.getElementById('nome-pokemon').textContent = formatarNome(pokemon.name);
-  document.getElementById('altura-pokemon').textContent = `${(pokemon.height / 10).toFixed(1)} m`;
-  document.getElementById('peso-pokemon').textContent = `${(pokemon.weight / 10).toFixed(1)} kg`;
+  document.getElementById('altura-pokemon').textContent = formatarAltura(pokemon.height);
+  document.getElementById('peso-pokemon').textContent = formatarPeso(pokemon.weight);
   document.getElementById('habilidade-pokemon').textContent = formatarNome(pokemon.abilities[0].ability.name);
 
   const tipos = document.getElementById('tipos-pokemon');
@@ -73,12 +69,12 @@ const listaFavoritos = document.getElementById('lista-favoritos');
 const estadoFavoritos = document.getElementById('estado-favoritos');
 const contadorFavoritos = document.getElementById('contador-favoritos');
 
-function jaFavoritado() {
-  return pokemonAtual && favoritos.some((f) => f.nome_item === pokemonAtual.nome);
+function pokemonJaFavoritado() {
+  return Boolean(pokemonAtual) && jaFavoritado(favoritos, pokemonAtual.nome);
 }
 
 function atualizarBotaoFavoritar() {
-  const ja = jaFavoritado();
+  const ja = pokemonJaFavoritado();
   botaoFavoritar.disabled = ja;
   botaoFavoritar.textContent = ja ? '★ Nos favoritos' : '☆ Favoritar';
 }
@@ -183,7 +179,7 @@ function renderizarFavoritos() {
 }
 
 botaoFavoritar.addEventListener('click', async () => {
-  if (!pokemonAtual || jaFavoritado()) return;
+  if (!pokemonAtual || pokemonJaFavoritado()) return;
   botaoFavoritar.disabled = true;
   const ok = await salvarFavorito(pokemonAtual.nome, pokemonAtual.extra);
   msgFavorito.textContent = ok ? 'Salvo no banco de dados!' : 'Erro ao salvar. Veja o console (F12).';
@@ -199,7 +195,7 @@ async function buscarPokemon(termo) {
   botaoBuscar.textContent = 'Buscando...';
 
   try {
-    const resposta = await fetch(`${API_URL}${encodeURIComponent(termo.toLowerCase().trim())}`);
+    const resposta = await fetch(`${API_URL}${encodeURIComponent(normalizarTermo(termo))}`);
     if (!resposta.ok) throw new Error('not-found');
     const pokemon = await resposta.json();
     exibirPokemon(pokemon);
@@ -214,7 +210,7 @@ async function buscarPokemon(termo) {
 formBusca.addEventListener('submit', (evento) => {
   evento.preventDefault();
   const termo = campoBusca.value.trim();
-  if (termo) buscarPokemon(termo);
+  if (validarEntrada(termo)) buscarPokemon(termo);
 });
 
 document.querySelectorAll('.link-exemplo').forEach((botao) => {

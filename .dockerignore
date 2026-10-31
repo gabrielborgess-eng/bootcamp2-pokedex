@@ -1,8 +1,13 @@
 .git
 .gitignore
+.github
 .vscode
 README.md
 Dockerfile
 .dockerignore
+node_modules
+package.json
+package-lock.json
+utils.test.js
 *.png
 *.jpg
