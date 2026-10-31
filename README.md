@@ -1,125 +1,118 @@
-# PokeBusca
+# PokeBusca — Projeto Final (Etapa 03)
 
-## Autor
+Pokédex online com favoritos salvos em banco de dados, testes automatizados, integração contínua (GitHub Actions) e imagem Docker publicada.
 
-**Nome completo:** Gabriel Borges de Souza Santiago — **RA:** 22607168
+> **Trabalho individual.** O professor autorizou a realização desta etapa sozinho; por isso o grupo tem um único integrante e a proteção da `main` não exige aprovação de revisor (o GitHub não permite aprovar o próprio PR). Todo código entra por Pull Request, com o check de testes obrigatório.
 
-## Descrição
+## 1. Integrantes
 
-O PokeBusca é uma Pokédex online que permite pesquisar um Pokémon pelo nome ou número. A aplicação consulta a PokéAPI e apresenta imagem, número, tipos, altura, peso e habilidade principal.
+| Nome | Matrícula (RA) | Usuário GitHub | Funcionalidades sob responsabilidade | Principal PR |
+|---|---|---|---|---|
+| Gabriel Borges de Souza Santiago | 22607168 | [gabrielborgess-eng](https://github.com/gabrielborgess-eng) | Frontend, integração com a PokéAPI, persistência (Supabase), testes automatizados, CI (GitHub Actions) e Docker/Docker Hub | [PR #1: testes e CI](https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/1) |
 
-Na **Etapa 02**, a aplicação ganhou **persistência de dados**: o usuário pode favoritar Pokémon, e os favoritos ficam salvos em um banco de dados PostgreSQL (Supabase). Além disso, a aplicação foi **conteinerizada com Docker** (Nginx) e publicada no Docker Hub.
+## 2. Aplicação
 
-## Links
+O PokeBusca busca um Pokémon pelo nome ou número e mostra imagem, número, tipos, altura, peso e habilidade principal. O usuário pode **favoritar** Pokémon; os favoritos ficam salvos em um banco de dados e são listados ao abrir a página, com opção de excluir.
 
-- **Repositório (GitHub):** https://github.com/gabrielborgess-eng/bootcamp2-pokedex
-- **Aplicação no ar (GitHub Pages):** https://gabrielborgess-eng.github.io/bootcamp2-pokedex/
-- **Imagem no Docker Hub:** https://hub.docker.com/r/bgz61/bootcamp2-app
+- **API externa consumida:** [PokéAPI](https://pokeapi.co/docs/v2) — `GET https://pokeapi.co/api/v2/pokemon/{nome-ou-numero}` (sem autenticação).
+- **Banco de dados:** Supabase (PostgreSQL), acessado direto do frontend pela API REST (`/rest/v1/favoritos`) com `fetch`, usando a chave pública (publishable/anon).
+- **Interface:** HTML, CSS e JavaScript puro.
 
-## Como executar com Docker
-
-Com o Docker instalado, basta uma linha:
-
-```bash
-docker run -d -p 8080:80 bgz61/bootcamp2-app:1.1
-```
-
-Depois acesse **http://localhost:8080**.
-
-Para parar e remover o container: `docker rm -f <id-ou-nome>`.
-
-## Persistência de dados
-
-- **Banco escolhido:** Supabase (PostgreSQL), plano gratuito, região South America (São Paulo).
-- **Acesso:** o frontend conversa com a API REST do Supabase (`/rest/v1/favoritos`) usando `fetch`, com a chave pública (publishable/anon). Não há servidor próprio.
-- **O que é salvo:** os Pokémon favoritados pelo usuário.
-- **Operações:** criar (botão **Favoritar**), listar (seção **Meus favoritos**, carregada ao abrir a página) e excluir (botão ✕ em cada item).
-
-### Estrutura da tabela `favoritos`
+### Tabela `favoritos`
 
 | Coluna | Tipo | Descrição |
 |---|---|---|
-| `id` | bigint (identity, PK) | identificador do registro |
-| `criado_em` | timestamptz (default `now()`) | data e hora em que foi favoritado |
+| `id` | bigint (identity, PK) | identificador |
+| `criado_em` | timestamptz (default `now()`) | data e hora do favorito |
 | `nome_item` | text (not null) | nome do Pokémon |
-| `dados_extra` | jsonb | `{ id, imagem, tipos }` do Pokémon |
+| `dados_extra` | jsonb | `{ id, imagem, tipos }` |
 
-### Limitação conhecida
+**Limitação conhecida:** o RLS está ativado com políticas abertas para `anon` (select, insert e delete). Qualquer visitante vê e altera a mesma lista, pois não há login por usuário. A chave secret/service_role não é usada.
 
-O RLS (Row Level Security) está ativado, mas com **políticas abertas para o papel `anon`** (select, insert e delete), como permitido nesta etapa. Isso significa que qualquer visitante pode ler, criar e excluir favoritos, e que todos veem a mesma lista (não há login por usuário). A chave usada no código é a **publishable/anon**, feita para o frontend; a chave secret/service_role **não** é utilizada. Em um produto real seriam necessárias autenticação e políticas por usuário.
+## 3. Links
 
-## Funcionalidades
+- **Repositório:** https://github.com/gabrielborgess-eng/bootcamp2-pokedex
+- **Aplicação (GitHub Pages):** https://gabrielborgess-eng.github.io/bootcamp2-pokedex/
+- **Docker Hub:** https://hub.docker.com/r/bgz61/bootcamp2-app
 
-- Busca de Pokémon por nome ou número (PokéAPI);
-- Exibição da imagem oficial, nome, número, tipos, altura, peso e habilidade;
-- Favoritar um Pokémon e salvá-lo no banco de dados;
-- Lista "Meus favoritos" carregada ao abrir a página, com botão para ver e para excluir cada item;
-- Mensagens de carregamento e de erro;
-- Layout responsivo.
+## 4. Como executar
 
-## Evidências das sidequests
-
-### SQ1 · `.dockerignore`
-
-O arquivo `.dockerignore` exclui `.git`, `.gitignore`, `.vscode`, `README.md`, `Dockerfile`, `.dockerignore`, `*.png` e `*.jpg`.
-
-Isso deixa a imagem menor e o build mais rápido porque o Docker envia ao motor, antes de construir, todo o **contexto de build** (a pasta do projeto). Sem o `.dockerignore`, itens como a pasta `.git` (com todo o histórico), prints e rascunhos seriam enviados e poderiam acabar dentro da imagem. Com ele, só o necessário entra: o contexto é menor, a transferência é mais rápida, o cache de camadas é invalidado com menos frequência e a imagem final não carrega arquivos inúteis ou sensíveis.
-
-- Contexto de build **antes** do `.dockerignore`: 21.62 kB
-- Contexto de build **depois** do `.dockerignore`: **5.08** kB
-
-Redução de cerca de 76% no contexto enviado ao Docker (21.62 kB → 5.08 kB). O log do build também mostra o próprio `.dockerignore` sendo lido: `load .dockerignore → transferring context: 112B`.
-
-### SQ2 · Versionamento de imagem
-
-Tags publicadas no Docker Hub:
-
-- `1.0`: primeira versão funcional (busca + favoritos);
-- `1.1`: após melhoria (rodapé atualizado);
-- `latest`: aponta para a versão mais recente.
+### Via Docker (recomendado)
 
 ```bash
-docker tag bootcamp2-app bgz61/bootcamp2-app:1.1
-docker tag bootcamp2-app bgz61/bootcamp2-app:latest
-docker push bgz61/bootcamp2-app:1.1
-docker push bgz61/bootcamp2-app:latest
+docker run -d -p 8080:80 bgz61/bootcamp2-app:2.0
 ```
 
-Evidência: aba **Tags** do repositório https://hub.docker.com/r/bgz61/bootcamp2-app/tags
+Depois abra **http://localhost:8080**. A aplicação não precisa de variáveis de ambiente: a URL e a chave pública do Supabase já estão no código. Para parar: `docker rm -f <id-ou-nome>`.
 
-### SQ3 · Descrição no Docker Hub
-
-O overview do repositório descreve a aplicação, traz o comando `docker run` pronto para copiar e o link do repositório no GitHub: https://hub.docker.com/r/bgz61/bootcamp2-app
-
-### SQ4 · Orquestração
-
-Duas instâncias da mesma imagem rodando ao mesmo tempo, nas portas 8080 e 8081:
+### Localmente (sem Docker)
 
 ```bash
-docker run -d -p 8080:80 --name app1 bgz61/bootcamp2-app:1.1
-docker run -d -p 8081:80 --name app2 bgz61/bootcamp2-app:1.1
-docker ps
+git clone https://github.com/gabrielborgess-eng/bootcamp2-pokedex.git
+cd bootcamp2-pokedex
+python -m http.server 8000
 ```
 
-Print do `docker ps`: ![docker ps com dois containers](docker-ps.png)
+Acesse http://localhost:8000 (ou use a extensão Live Server do VS Code). É preciso internet para acessar a PokéAPI e o Supabase.
 
-**E se eu tivesse 100 containers, como gerenciaria?** Subir e acompanhar 100 containers com `docker run` manual é inviável: seria preciso distribuí-los entre várias máquinas, reiniciar os que caem, atualizar versões sem tirar o serviço do ar e balancear o tráfego. É para isso que existe o **Kubernetes**, um orquestrador de containers. Seus conceitos centrais são: o **cluster**, o conjunto de máquinas (nós) gerenciadas em conjunto, com um plano de controle que decide onde cada carga roda; o **pod**, a menor unidade de execução, que encapsula um ou mais containers que compartilham rede e armazenamento; e a **réplica**, cada cópia idêntica de um pod. Declarando, por exemplo, "quero 100 réplicas desta imagem", o Kubernetes distribui os pods pelos nós, recria automaticamente os que falham, permite escalar para mais ou menos réplicas e faz atualizações graduais (rolling update). O que fiz aqui com duas portas manualmente é, em miniatura, o que o Kubernetes automatiza em larga escala.
+## 5. Como rodar os testes
 
-## Estrutura do projeto
+Requer Node.js 20 ou superior.
+
+```bash
+npm install
+npm test
+```
+
+São **10 testes** (Jest) em `utils.test.js`, cobrindo as funções puras de `utils.js`: validação da busca, normalização do termo, formatação de nome, número, altura e peso, e checagem de favorito.
+
+## 6. Integração contínua e proteção da `main`
+
+- **Workflow:** `.github/workflows/ci.yml` ("CI - Testes") roda `npm install` e `npm test` a cada Pull Request e a cada push na `main`.
+- **Proteção da `main` (ruleset):**
+  - exige Pull Request antes do merge (ninguém commita direto na `main`);
+  - exige que o check **`testes`** passe antes do merge;
+  - aprovações exigidas: 0, por ser um trabalho individual (autorizado pelo professor).
+- **Branches** seguem o padrão `feature/<descricao>`.
+
+## 7. Evidências
+
+### PR bloqueado pelo CI
+### PR bloqueado pelo CI
+
+Abri um PR de propósito com um teste quebrado ([PR #2](https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/2)). O check **CI - Testes** ficou vermelho e o GitHub bloqueou o merge. Depois da correção, o check passou e o merge foi liberado.
+
+![PR bloqueado pelo CI](pr-bloqueado.png)
+
+![PR mesclado depois da correção](pr-corrigido.png)
+
+### Conflito de merge
+
+Nos PRs desta etapa **não houve conflito de merge**, pois só uma pessoa alterou o código. O único conflito de histórico ocorreu na Etapa 02, quando o repositório local e o do GitHub tinham históricos diferentes (arquivos enviados pelo site); foi resolvido com `git pull --allow-unrelated-histories -X ours`, mantendo a versão local do código.
+
+### Pull Requests
+
+| PR | Descrição | Resultado |
+|---|---|---|
+| https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/1 | Adiciona testes automatizados e CI com GitHub Actions | check verde, mesclado |
+| https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/2 | Teste quebrado de propósito para validar o bloqueio do CI | check vermelho (merge bloqueado) e depois verde, mesclado |
+
+## 8. Estrutura do projeto
 
 ```text
 bootcamp2-pokedex/
-├── index.html      # estrutura da página
-├── style.css       # estilos e responsividade
-├── script.js       # busca na API, favoritos (Supabase) e interação
-├── Dockerfile      # imagem Nginx servindo a aplicação
-├── .dockerignore   # arquivos fora do contexto de build
-├── docker-ps.png   # evidência da SQ4
-└── README.md       # documentação do projeto
+├── .github/workflows/ci.yml   # workflow de testes (GitHub Actions)
+├── index.html                 # estrutura da página
+├── style.css                  # estilos
+├── utils.js                   # funções puras (testadas)
+├── utils.test.js              # testes Jest
+├── script.js                  # busca na API, favoritos (Supabase) e interface
+├── package.json               # scripts e dependências de teste
+├── Dockerfile                 # imagem Nginx
+├── .dockerignore              # arquivos fora do contexto de build
+└── README.md
 ```
 
-NÃO ESQUECER DE OLHAR supabase-favoritos.png PARA VER A OUTRA PRINT
+## Créditos
 
-Se o botão de favoritar não funcionar é porque, tem que subir o supabse regularmente, posso acabar não lembrando de subir
-
-Os dados dos Pokémon são fornecidos gratuitamente pela [PokéAPI](https://pokeapi.co/). Este projeto não possui vínculo oficial com a The Pokémon Company ou a Nintendo.
+Dados fornecidos pela [PokéAPI](https://pokeapi.co/). Projeto sem vínculo oficial com The Pokémon Company ou a Nintendo.
