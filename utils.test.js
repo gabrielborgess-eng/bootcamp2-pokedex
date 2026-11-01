@@ -37,7 +37,7 @@ describe('formatadores', () => {
   });
 
   test('formata o número da Pokédex com 3 dígitos', () => {
-    expect(formatarNumero(6)).toBe('#007');
+    expect(formatarNumero(6)).toBe('#006');
     expect(formatarNumero(25)).toBe('#025');
     expect(formatarNumero(1025)).toBe('#1025');
   });
