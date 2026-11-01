@@ -78,9 +78,10 @@ São **10 testes** (Jest) em `utils.test.js`, cobrindo as funções puras de `ut
 ## 7. Evidências
 
 ### PR bloqueado pelo CI
-### PR bloqueado pelo CI
 
-Abri um PR de propósito com um teste quebrado ([PR #2](https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/2)). O check **CI - Testes** ficou vermelho e o GitHub bloqueou o merge. Depois da correção, o check passou e o merge foi liberado.
+Abri um PR de propósito com um teste quebrado ([PR #3](https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/3)). O check **CI - Testes** ficou vermelho, marcado como **Required**, e o GitHub bloqueou o merge (botão desabilitado). Depois da correção, o check passou e o merge foi liberado.
+
+Observação: no PR #2 (a primeira tentativa) o ruleset da `main` ainda não estava ativo, por isso o merge não ficou bloqueado. Corrigi a configuração (ruleset `proteger-main`, com Pull Request e o check `testes` obrigatórios) e repeti o teste no PR #3.
 
 ![PR bloqueado pelo CI](pr-bloqueado.png)
 
