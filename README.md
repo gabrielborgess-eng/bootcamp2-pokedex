@@ -95,8 +95,9 @@ Nos PRs desta etapa **não houve conflito de merge**, pois só uma pessoa altero
 
 | PR | Descrição | Resultado |
 |---|---|---|
-| https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/1 | Adiciona testes automatizados e CI com GitHub Actions | check verde, mesclado |
-| https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/2 | Teste quebrado de propósito para validar o bloqueio do CI | check vermelho (merge bloqueado) e depois verde, mesclado |
+| [#1](https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/1) | Adiciona testes automatizados e CI com GitHub Actions | check verde, mesclado |
+| [#2](https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/2) | Primeira tentativa de teste quebrado (proteção ainda não ativa) | check vermelho, mas o merge não foi bloqueado; mesclado após a correção |
+| [#3](https://github.com/gabrielborgess-eng/bootcamp2-pokedex/pull/3) | README final e teste quebrado de propósito para validar o bloqueio do CI | check vermelho (merge bloqueado) e depois verde, mesclado |
 
 ## 8. Estrutura do projeto
 
